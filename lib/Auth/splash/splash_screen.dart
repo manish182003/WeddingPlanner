@@ -1,5 +1,8 @@
 import 'package:eternal_tie/Auth/auth_pages/auth_login.dart';
+import 'package:eternal_tie/Home/screens/Bottom_Nav_Screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routename = '/splash';
@@ -34,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       () {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          AuthLogin.routename,
+          BottomNavBar.routename,
           (route) => false,
         );
       },
@@ -51,8 +54,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 116, 164, 188),
-      // backgroundColor: Colors.white,
+      // backgroundColor: const Color.fromARGB(255, 116, 164, 188),
+      backgroundColor: Colors.white,
       body: Container(
         decoration: const BoxDecoration(
             // gradient: LinearGradient(
@@ -64,42 +67,77 @@ class _SplashScreenState extends State<SplashScreen>
             //   ],
             // ),
             ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedBuilder(
-                animation: animationController,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: animation.value,
-                    child: const Image(
-                      image: AssetImage('assets/images/splash.png'),
-                      width: 300,
-                      height: 200,
-                    ),
-                  );
-                },
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedBuilder(
+                    animation: animationController,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: animation.value,
+                        child: const Image(
+                          image: AssetImage('assets/images/splash.png'),
+                          width: 400,
+                          height: 140,
+                        ),
+                      );
+                    },
+                  ),
+                  AnimatedBuilder(
+                    animation: animationController,
+                    builder: (context, child) {
+                      return Opacity(
+                        opacity: animation.value,
+                        child: const Center(
+                          child: Text(
+                            'EternalTie',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontFamily: 'Roboto',
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-              AnimatedBuilder(
-                animation: animationController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: animation.value,
-                    child: const Text(
-                      'EternalTie',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
+            ),
+            const Positioned(
+              bottom: 20,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  FlutterLogo(
+                    size: 50,
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Created With',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
-                },
+                  ),
+                  Text(
+                    'Flutter & Dart',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
