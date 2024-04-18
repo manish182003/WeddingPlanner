@@ -1,4 +1,4 @@
-import 'package:eternal_tie/Home/screens/home_screen.dart';
+import 'package:eternal_tie/User/Home/screens/home_screen.dart';
 import 'package:eternal_tie/Utility/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

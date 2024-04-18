@@ -1,6 +1,6 @@
 import 'package:eternal_tie/Auth/Services/auth_login_services.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_register.dart';
-import 'package:eternal_tie/Home/screens/home_screen.dart';
+import 'package:eternal_tie/User/Home/screens/home_screen.dart';
 import 'package:eternal_tie/Utility/snackbar.dart';
 import 'package:flutter/material.dart';
 

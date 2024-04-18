@@ -1,10 +1,14 @@
+import 'package:eternal_tie/Admin/Vendors/screens/vendor_create.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_login.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_register.dart';
 import 'package:eternal_tie/Auth/splash/splash_screen.dart';
-import 'package:eternal_tie/Home/screens/Bottom_Nav_Screen.dart';
-import 'package:eternal_tie/Home/screens/SearchScreen.dart';
-import 'package:eternal_tie/Home/screens/all_Venue.dart';
-import 'package:eternal_tie/Home/screens/home_screen.dart';
+import 'package:eternal_tie/User/Home/screens/Bottom_Nav_Screen.dart';
+import 'package:eternal_tie/User/Home/screens/SearchScreen.dart';
+import 'package:eternal_tie/User/Home/screens/VenueDetails.dart';
+import 'package:eternal_tie/User/Home/screens/all_Photographer.dart';
+import 'package:eternal_tie/User/Home/screens/all_Venue.dart';
+import 'package:eternal_tie/User/Home/screens/home_screen.dart';
+import 'package:eternal_tie/User/Home/services/allVenueData.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> getRoute(RouteSettings settings) {
@@ -17,6 +21,23 @@ Route<dynamic> getRoute(RouteSettings settings) {
     case AuthLogin.routename:
       return MaterialPageRoute(
         builder: (context) => const AuthLogin(),
+      );
+
+    case CreateVendors.routename:
+      return MaterialPageRoute(
+        builder: (context) => const CreateVendors(),
+      );
+
+    case VenueDetails.routename:
+      var venueData = settings.arguments as AllVenueData;
+      return MaterialPageRoute(
+        builder: (context) => VenueDetails(
+          image: venueData.image,
+          name: venueData.name,
+          place: venueData.place,
+          price: venueData.price,
+          tag: venueData.tag,
+        ),
       );
 
     case HomeScreen.routename:
@@ -35,8 +56,16 @@ Route<dynamic> getRoute(RouteSettings settings) {
       );
 
     case SearchScreen.routename:
+      var term = settings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
-        builder: (context) => const SearchScreen(),
+        builder: (context) => SearchScreen(
+          isVenue: term['term'],
+        ),
+      );
+
+    case AllPhotographers.routename:
+      return MaterialPageRoute(
+        builder: (context) => const AllPhotographers(),
       );
 
     case BottomNavBar.routename:

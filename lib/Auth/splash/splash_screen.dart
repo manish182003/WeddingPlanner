@@ -1,5 +1,6 @@
+import 'package:eternal_tie/Admin/Vendors/screens/vendor_create.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_login.dart';
-import 'package:eternal_tie/Home/screens/Bottom_Nav_Screen.dart';
+import 'package:eternal_tie/User/Home/screens/Bottom_Nav_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
       () {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          BottomNavBar.routename,
+          CreateVendors.routename,
           (route) => false,
         );
       },
