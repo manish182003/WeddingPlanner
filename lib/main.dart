@@ -1,9 +1,16 @@
+import 'package:eternal_tie/Auth/UserProvider.dart';
 import 'package:eternal_tie/Auth/splash/splash_screen.dart';
 import 'package:eternal_tie/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

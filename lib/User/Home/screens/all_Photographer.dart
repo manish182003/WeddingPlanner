@@ -33,10 +33,13 @@ class _AllPhotographersState extends State<AllPhotographers> {
           children: [
             TextFormField(
               onTap: () {
-                Navigator.pushNamed(context, SearchScreen.routename,
-                    arguments: {
-                      'term': false,
-                    });
+                Navigator.pushNamed(
+                  context,
+                  SearchScreen.routename,
+                  arguments: {
+                    'term': false,
+                  },
+                );
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(

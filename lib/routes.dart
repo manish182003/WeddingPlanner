@@ -1,6 +1,9 @@
 import 'package:eternal_tie/Admin/Vendors/screens/vendor_create.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_login.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_register.dart';
+import 'package:eternal_tie/Auth/auth_pages/change_Password.dart';
+import 'package:eternal_tie/Auth/auth_pages/forgetPassword.dart';
+import 'package:eternal_tie/Auth/auth_pages/otp_screen.dart';
 import 'package:eternal_tie/Auth/splash/splash_screen.dart';
 import 'package:eternal_tie/User/Home/screens/Bottom_Nav_Screen.dart';
 import 'package:eternal_tie/User/Home/screens/SearchScreen.dart';
@@ -23,9 +26,30 @@ Route<dynamic> getRoute(RouteSettings settings) {
         builder: (context) => const AuthLogin(),
       );
 
+    case ChangePassword.routename:
+      var email = settings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+        builder: (context) => ChangePassword(
+          email: email['email'],
+        ),
+      );
+
     case CreateVendors.routename:
       return MaterialPageRoute(
         builder: (context) => const CreateVendors(),
+      );
+
+    case OtpScreen.routename:
+      var email = settings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+        builder: (context) => OtpScreen(
+          email: email['email'],
+        ),
+      );
+
+    case ForgetPassword.routename:
+      return MaterialPageRoute(
+        builder: (context) => const ForgetPassword(),
       );
 
     case VenueDetails.routename:

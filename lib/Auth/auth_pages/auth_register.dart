@@ -266,7 +266,7 @@ class _AuthRegisterState extends State<AuthRegister> {
                     ),
                     TextFormField(
                       controller: confirmcontroller,
-                      obscureText: show,
+                      obscureText: show1,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -373,20 +373,25 @@ class _AuthRegisterState extends State<AuthRegister> {
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.zero,
                           )),
-                      onPressed: () {
+                      onPressed: () async {
                         if (formkey.currentState!.validate()) {
+                          if (passwordcontroller.text ==
+                              confirmcontroller.text) {
+                            await authLoginServices.SignUpUser(
+                              context,
+                              emailcontroller.text,
+                              passwordcontroller.text,
+                            );
+                          }
+
                           firstname.text = '';
                           lastName.text = '';
 
                           emailcontroller.text = '';
                           passwordcontroller.text = '';
                           confirmcontroller.text = '';
-                          showSnackBar(context, 'Register Successful');
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            AuthLogin.routename,
-                            (route) => false,
-                          );
+
+                          // showSnackBar(context, 'Register Successful');
                         }
                       },
                       child: const Text(

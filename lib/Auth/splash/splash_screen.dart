@@ -1,9 +1,12 @@
 import 'package:eternal_tie/Admin/Vendors/screens/vendor_create.dart';
+import 'package:eternal_tie/Auth/Services/auth_login_services.dart';
+import 'package:eternal_tie/Auth/UserProvider.dart';
 import 'package:eternal_tie/Auth/auth_pages/auth_login.dart';
 import 'package:eternal_tie/User/Home/screens/Bottom_Nav_Screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routename = '/splash';
@@ -17,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
+  AuthLoginServices authServices = AuthLoginServices();
 
   @override
   void initState() {
@@ -33,12 +37,15 @@ class _SplashScreenState extends State<SplashScreen>
     ));
 
     animationController.forward();
+    var user = Provider.of<UserProvider>(context, listen: false).user;
+
     Future.delayed(
       const Duration(seconds: 3),
       () {
+        authServices.GetUserData(context);
         Navigator.pushNamedAndRemoveUntil(
           context,
-          CreateVendors.routename,
+          user.token.isEmpty ? AuthLogin.routename : BottomNavBar.routename,
           (route) => false,
         );
       },
@@ -48,8 +55,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     animationController.dispose();
+    super.dispose();
   }
 
   @override
