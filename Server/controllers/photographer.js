@@ -22,7 +22,7 @@ async function handleUpdatephotographerById(req, res){
 
 //To remove vendor
 async function handleDeletephotographerById(req, res){
-    await photographer.findByIdAndDelete(req.params.id);
+    await Photographer.findByIdAndDelete(req.params.id);
     return res.json({status : "Success"});
 }
 
