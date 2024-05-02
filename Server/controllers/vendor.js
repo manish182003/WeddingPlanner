@@ -23,7 +23,7 @@ async function handleUpdateVendorById(req, res){
 
 //To remove vendor
 async function handleDeleteVendorById(req, res){
-    await vendor.findByIdAndDelete(req.params.id);
+    await Vendor.findByIdAndDelete(req.params.id);
     return res.json({status : "Success"});
 }
 
