@@ -6,7 +6,7 @@ const otpdata=require('../models/otp');
 const User=require('../models/User');
 const bcrypt = require('bcrypt');
 
-
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 otp.post("/api/mail/otp", async(req,res)=>{
     const reset_email = req.body.email;
@@ -19,9 +19,9 @@ otp.post("/api/mail/otp", async(req,res)=>{
      if(!user){
       res.status(400).json({error:'User with that email does not exist!'})
      }else{
-      const CLIENT_ID = "145604803965-ihnq83tuh9v2g5r4ojbid30stsrm9unc.apps.googleusercontent.com";
-      const CLIENT_SECRET =  "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";
-      const REFRESH_TOKEN = "1//04MYkFrc8-wbFCgYIARAAGAQSNwF-L9IrJE5fV-GW_b3CVrghdmWW_4h3wAovxIsgSsKF3kFCz5QT8Fby-lGV12TcN4hJwqu4GqU";
+      const CLIENT_ID = "581816674433-jnqph0iuggbagt9a0t59poudgd99mfot.apps.googleusercontent.com";
+      const CLIENT_SECRET =  "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";
+      const REFRESH_TOKEN = "1//04rzLuMC1jRRXCgYIARAAGAQSNwF-L9IrxVdFVtJ3LkjtTNhxym7Ai5Cwn_JIp5jTDkNZbf7f5icU-6UBu7hrQUag0jedxJ-pWGk";
       const REDIRECT_URI = "https://developers.google.com/oauthplayground";
     
       const OAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
@@ -35,8 +35,10 @@ otp.post("/api/mail/otp", async(req,res)=>{
                 service: 'gmail',
                 auth: {
                     type: 'OAuth2',
-                    user: 'EternalTie.EternalTie@gmail.com',
-                    pass: 'EternalTie.EternalTie123',
+                    // user: 'EternalTie.EternalTie@gmail.com',
+                    // pass: 'EternalTie.EternalTie123',
+                    user:'manishjoshi182003@gmail.com',
+                    pass:'390113192875',
                     clientId: CLIENT_ID,
                     clientSecret: CLIENT_SECRET,
                     refreshToken: REFRESH_TOKEN,

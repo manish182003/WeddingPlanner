@@ -5,12 +5,14 @@ class CustomSearch extends StatefulWidget {
   final String title;
   final String place;
   VoidCallback voidCallback;
+  final bool isfetch;
   CustomSearch({
     Key? key,
     required this.image,
     required this.title,
     required this.place,
     required this.voidCallback,
+    this.isfetch = false,
   }) : super(key: key);
 
   @override
@@ -43,10 +45,15 @@ class _CustomSearchState extends State<CustomSearch> {
                   SizedBox(
                     height: 45,
                     width: 50,
-                    child: Image.asset(
-                      widget.image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.isfetch
+                        ? Image.network(
+                            widget.image,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            widget.image,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   const SizedBox(
                     width: 10,

@@ -9,6 +9,7 @@ class CustomVenue extends StatelessWidget {
   final String price;
   final String id;
   final VoidCallback onClick;
+  final bool isfetch;
   const CustomVenue({
     Key? key,
     required this.image,
@@ -17,6 +18,7 @@ class CustomVenue extends StatelessWidget {
     required this.price,
     required this.id,
     required this.onClick,
+    this.isfetch = false,
   }) : super(key: key);
 
   @override
@@ -39,12 +41,17 @@ class CustomVenue extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: InkWell(
                     onTap: onClick,
-                    child: Image(
-                      image: AssetImage(image),
-                      // height: 100,
-                      // width: 200,
-                      fit: BoxFit.cover,
-                    ),
+                    child: isfetch
+                        ? Image(
+                            image: NetworkImage(image),
+                            fit: BoxFit.cover,
+                          )
+                        : Image(
+                            image: AssetImage(image),
+                            // height: 100,
+                            // width: 200,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
@@ -71,7 +78,7 @@ class CustomVenue extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              price,
+              isfetch ? 'Rs $price onwards' : price,
               style: const TextStyle(
                 fontFamily: 'Arial',
                 fontSize: 18,

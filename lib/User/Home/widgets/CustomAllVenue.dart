@@ -1,13 +1,11 @@
-import 'package:eternal_tie/User/Home/screens/VenueDetails.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:eternal_tie/User/Home/services/HomeServices.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CustomAllVenue extends StatefulWidget {
   final String place;
   final String name;
   final String price;
-
   final String imagePath;
   VoidCallback callback;
   CustomAllVenue({
@@ -24,6 +22,7 @@ class CustomAllVenue extends StatefulWidget {
 }
 
 class _CustomAllVenueState extends State<CustomAllVenue> {
+  HomeServices homeServices = HomeServices();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -155,50 +154,68 @@ class _CustomAllVenueState extends State<CustomAllVenue> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.68,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.red),
-                        ),
-                        child: const Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.message_rounded,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                'Message',
-                                style: TextStyle(
+                      InkWell(
+                        onTap: () {
+                          homeServices.launchMessage(
+                            context,
+                            '+919548950280',
+                            'Hello, I am using the EternalTie app and I am interested in your venue. Could we discuss more details regarding bookings and availability? Thank you!',
+                          );
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.68,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.red),
+                          ),
+                          child: const Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.message_rounded,
                                   color: Colors.red,
-                                  fontSize: 18,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  'Message',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.green,
-                            width: 2,
+                      InkWell(
+                        onTap: () {
+                          homeServices.launchWhatsapp(
+                            context,
+                            '+919548950280',
+                            'Hello, I am using the EternalTie app and I am interested in your venue. Could we discuss more details regarding bookings and availability? Thank you!',
+                          );
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.green,
+                              width: 2,
+                            ),
                           ),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.call,
-                            color: Colors.green,
-                            size: 32,
+                          child: const Center(
+                            child: Icon(
+                              Icons.call,
+                              color: Colors.green,
+                              size: 32,
+                            ),
                           ),
                         ),
                       )

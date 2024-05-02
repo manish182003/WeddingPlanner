@@ -1,12 +1,18 @@
+import 'dart:collection';
+
+import 'package:eternal_tie/User/Home/Models/Venue.dart';
 import 'package:eternal_tie/User/Home/screens/Shimmer.dart';
 import 'package:eternal_tie/User/Home/screens/VenueDetails.dart';
 import 'package:eternal_tie/User/Home/screens/all_Photographer.dart';
 import 'package:eternal_tie/User/Home/screens/all_Venue.dart';
+import 'package:eternal_tie/User/Home/screens/photographerDetails.dart';
+import 'package:eternal_tie/User/Home/services/HomeServices.dart';
 import 'package:eternal_tie/User/Home/services/allVenueData.dart';
 import 'package:eternal_tie/User/Home/widgets/Venues.dart';
 import 'package:eternal_tie/User/Home/widgets/custom_story.dart';
 import 'package:eternal_tie/User/Home/widgets/custom_venue.dart';
 import 'package:eternal_tie/User/Home/widgets/photographers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
@@ -23,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String selectedCity = 'All Cities'; // Default selected city
   int selectedIndex = 0;
   bool isLoading = true;
+  List<Venue> venue = [];
+  HomeServices homeServices = HomeServices();
   List<String> data = [
     'All Cities',
     'Haldwani',
@@ -42,6 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     LoadData();
+    getAllVenues();
+  }
+
+  getAllVenues() async {
+    venue = await homeServices.getAllVenues(context);
   }
 
   LoadData() {
@@ -99,15 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: isLoading
-          ? ShimmerLoader()
+          ? const ShimmerLoader()
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Container(
+                  SizedBox(
                     height: 100,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -252,11 +265,124 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
+                  venue.isEmpty
+                      ? const Center()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 0,
+                            vertical: 0,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                child: Text(
+                                  'Add On Venue',
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
+                                child: SizedBox(
+                                  height: 300,
+                                  child: ScrollSnapList(
+                                    itemCount: venue.length,
+                                    itemSize: 300,
+
+                                    dynamicItemSize: true,
+
+                                    onItemFocus: (index) {},
+                                    // scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      var venues = venue[index];
+                                      return Hero(
+                                        tag: venues.id,
+                                        child: CustomVenue(
+                                          image: venues.vendorImage,
+                                          name: venues.vendorName,
+                                          place: 'Haldwani',
+                                          price: venues.vendorPrice,
+                                          id: venues.id,
+                                          isfetch: true,
+                                          onClick: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              VenueDetails.routename,
+                                              arguments: AllVenueData(
+                                                image: venues.vendorImage,
+                                                name: venues.vendorName,
+                                                place: 'Haldwani',
+                                                isfetch: true,
+                                                price: venues.vendorPrice,
+                                                tag: venues.id,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AllVenuesScreen.routename,
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Colors.orange,
+                                      )),
+                                  child: Center(
+                                    child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            AllVenuesScreen.routename,
+                                          );
+                                        },
+                                        child: const Text(
+                                          'View All Venues',
+                                          style: TextStyle(
+                                            color: Colors.deepOrange,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 20,
-                    ),
-                    child: Text(
+                    ).copyWith(top: venue.isNotEmpty ? 40 : 0),
+                    child: const Text(
                       'Photographers for You',
                       style: TextStyle(
                         fontSize: 20,
@@ -283,13 +409,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         // scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           var venue = photographer[index];
-                          return CustomVenue(
-                            image: venue['image'],
-                            name: venue['text'],
-                            place: venue['place'],
-                            price: venue['price'],
-                            id: venue['id'].toString(),
-                            onClick: () {},
+                          return Hero(
+                            tag: venue['id'].toString(),
+                            child: CustomVenue(
+                              image: venue['image'],
+                              name: venue['text'],
+                              place: venue['place'],
+                              price: venue['price'],
+                              id: venue['id'].toString(),
+                              onClick: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  PhotoGraphDetails.routename,
+                                  arguments: {
+                                    'name': venue['text'],
+                                    'image': venue['image'],
+                                    'place': venue['place'],
+                                    'price': venue['price'],
+                                    'id': venue['id'].toString(),
+                                    'isfetch': false,
+                                  },
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
@@ -334,6 +476,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 30,
                   )
                 ],
               ),
