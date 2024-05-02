@@ -6,6 +6,7 @@ const venueRouter = require("./routes/venue")
 const photographerRouter = require("./routes/photographer")
 const authRoutes = require('./routes/auth');
 const otp=require('./routes/otp')
+const bookingRouter = require("./routes/booking")
 
 // const mailrouter =  require('./routes/mail');
 
@@ -24,6 +25,10 @@ app.use("/api/photographer", photographerRouter);
 
 // route for venues get and create
 app.use("/api/venue", venueRouter);
+
+
+//route for booking get and create
+app.use("/api/booking",bookingRouter)
 
 app.use(otp);
 

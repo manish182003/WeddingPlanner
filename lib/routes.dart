@@ -11,6 +11,7 @@ import 'package:eternal_tie/User/Home/screens/VenueDetails.dart';
 import 'package:eternal_tie/User/Home/screens/all_Photographer.dart';
 import 'package:eternal_tie/User/Home/screens/all_Venue.dart';
 import 'package:eternal_tie/User/Home/screens/home_screen.dart';
+import 'package:eternal_tie/User/Home/screens/photographerDetails.dart';
 import 'package:eternal_tie/User/Home/services/allVenueData.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +53,19 @@ Route<dynamic> getRoute(RouteSettings settings) {
         builder: (context) => const ForgetPassword(),
       );
 
+    case PhotoGraphDetails.routename:
+      var photo = settings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+        builder: (context) => PhotoGraphDetails(
+          image: photo['image'],
+          name: photo['name'],
+          isfetch: photo['isfetch'],
+          tag: photo['id'],
+          price: photo['price'],
+          place: photo['place'],
+        ),
+      );
+
     case VenueDetails.routename:
       var venueData = settings.arguments as AllVenueData;
       return MaterialPageRoute(
@@ -61,6 +75,7 @@ Route<dynamic> getRoute(RouteSettings settings) {
           place: venueData.place,
           price: venueData.price,
           tag: venueData.tag,
+          isfetch: venueData.isfetch,
         ),
       );
 

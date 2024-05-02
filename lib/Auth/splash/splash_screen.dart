@@ -37,12 +37,12 @@ class _SplashScreenState extends State<SplashScreen>
     ));
 
     animationController.forward();
-    var user = Provider.of<UserProvider>(context, listen: false).user;
 
     Future.delayed(
       const Duration(seconds: 3),
       () {
         authServices.GetUserData(context);
+        var user = Provider.of<UserProvider>(context, listen: false).user;
         Navigator.pushNamedAndRemoveUntil(
           context,
           user.token.isEmpty ? AuthLogin.routename : BottomNavBar.routename,
@@ -61,6 +61,19 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    // var user = Provider.of<UserProvider>(context, listen: false).user;
+
+    // Future.delayed(
+    //   const Duration(seconds: 3),
+    //   () {
+    //     authServices.GetUserData(context);
+    //     Navigator.pushNamedAndRemoveUntil(
+    //       context,
+    //       user.token.isEmpty ? AuthLogin.routename : BottomNavBar.routename,
+    //       (route) => false,
+    //     );
+    //   },
+    // );
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 116, 164, 188),
       backgroundColor: Colors.white,
@@ -129,14 +142,14 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 12,
                   ),
                   Text(
-                    'Created With',
+                    'Created By',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Flutter & Dart',
+                    'Akshit Team',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

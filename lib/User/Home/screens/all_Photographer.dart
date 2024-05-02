@@ -1,4 +1,5 @@
 import 'package:eternal_tie/User/Home/screens/SearchScreen.dart';
+import 'package:eternal_tie/User/Home/screens/photographerDetails.dart';
 import 'package:eternal_tie/User/Home/widgets/customAllPhotographer.dart';
 import 'package:eternal_tie/User/Home/widgets/photographers.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _AllPhotographersState extends State<AllPhotographers> {
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 20,
+          vertical: 0,
         ),
         child: Column(
           children: [
@@ -57,7 +58,7 @@ class _AllPhotographersState extends State<AllPhotographers> {
             Expanded(
               child: ListView.builder(
                 itemCount: photographer.length,
-                itemExtent: 450,
+                itemExtent: 400,
                 itemBuilder: (context, index) {
                   var photo = photographer[index];
                   return Column(
@@ -67,6 +68,20 @@ class _AllPhotographersState extends State<AllPhotographers> {
                         name: photo['text'],
                         price: photo['price'],
                         imagePath: photo['image'],
+                        callback: () {
+                          Navigator.pushNamed(
+                            context,
+                            PhotoGraphDetails.routename,
+                            arguments: {
+                              'name': photo['text'],
+                              'image': photo['image'],
+                              'place': photo['place'],
+                              'price': photo['price'],
+                              'id': photo['id'].toString(),
+                              'isfetch': false,
+                            },
+                          );
+                        },
                       ),
                       const Divider(
                         color: Colors.grey,
